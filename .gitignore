@@ -1,19 +1,38 @@
 # === GENERAL ===
 .DS_Store
 *.log
+*.log.*
 .env
 .env.local
+.env.*.local
 
 # === FRONTEND ===
 frontend/node_modules/
 frontend/dist/
 frontend/build/
 frontend/.env
+frontend/.env.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
 
 # === BACKEND ===
 backend/node_modules/
 backend/.env
 backend/logs/
+backend/dist/
+backend/uploads/
+backend/npm-debug.log*
+
+# === IDE ===
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# === OS ===
+Thumbs.db
 
 # === DOCKER ===
 .docker/
+EOF
