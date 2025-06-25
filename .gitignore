@@ -1,0 +1,19 @@
+# === GENERAL ===
+.DS_Store
+*.log
+.env
+.env.local
+
+# === FRONTEND ===
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.env
+
+# === BACKEND ===
+backend/node_modules/
+backend/.env
+backend/logs/
+
+# === DOCKER ===
+.docker/
