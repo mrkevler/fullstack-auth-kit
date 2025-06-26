@@ -1,5 +1,7 @@
 import express from "express";
 import User from "../models/User.js";
+import GitHubStrategy from "passport-github2";
+import passport from "passport";
 import {
   createdPassword,
   createToken,
@@ -7,6 +9,11 @@ import {
 } from "../utils/utils.js";
 
 const router = express.Router();
+
+router.use(passport.initialize());
+router.use(passport.session());
+
+// Login and register with email
 
 router.post("/register", async (req, res) => {
   try {
@@ -50,11 +57,45 @@ router.post("/login", async (req, res) => {
       token,
       user: {
         username: user.username,
+        type: user.type,
       },
     });
   } catch (error) {
     res.status(400).json({ message: error?.message });
   }
+});
+
+// GitHub Login
+
+router.get(
+  "/github",
+  passport.authenticate("github", { scope: ["user:email"] })
+);
+
+router.get(
+  "/github/callback",
+  passport.authenticate("github", { failureRedirect: "/" }),
+  (req, res) => {
+    const responseData = {
+      token: req.user.accessToken,
+      user: {
+        username: req.user.profile.username,
+        type: req.user.type,
+      },
+    };
+    const query = new URLSearchParams(responseData).toString();
+    res.redirect(
+      `http://localhost:5173/login?data=${JSON.stringify(responseData)}`
+    );
+  }
+);
+
+router.get("/github/logout", (req, res) => {
+  req.logout(() => {
+    res.json({
+      message: "Github user logout successfully!",
+    });
+  });
 });
 
 export default router;

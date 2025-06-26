@@ -15,6 +15,11 @@ const schema = new mongoose.Schema(
       type: mongoose.Schema.Types.String,
       required: true,
     },
+    type: {
+      type: mongoose.Schema.Types.String,
+      enum: ["github", "email"],
+      default: "email",
+    },
   },
   {
     timestamps: true,

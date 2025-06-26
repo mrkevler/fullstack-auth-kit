@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, Navigate } from "react-router-dom";
+import { Link, useNavigate, Navigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
 export default function Login() {
@@ -33,6 +33,22 @@ export default function Login() {
       );
     }
   };
+
+  const handleGitHubLogin = () => {
+    window.location = "http://localhost:5001/auth/github";
+  };
+  const params = useSearchParams();
+  useEffect(() => {
+    const dataParam = JSON.parse(params[0].get("data"));
+    if (dataParam) {
+      const token = dataParam.token;
+      const user = dataParam.user;
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      navigate("/profile");
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-900 flex flex-col">
@@ -124,6 +140,12 @@ export default function Login() {
                 className="w-full bg-gradient-to-r from-sky-500 to-cyan-500 text-white py-2 px-4 rounded-md hover:from-sky-600 hover:to-cyan-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-gray-800 transition duration-200"
               >
                 Sign In
+              </button>
+              <button
+                className="w-full bg-gray-800 text-white py-2 px-4 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-gray-800 transition duration-200"
+                onClick={handleGitHubLogin}
+              >
+                Login with GitHub
               </button>
               {error && <p className="text-red-500">{error}</p>}
             </div>

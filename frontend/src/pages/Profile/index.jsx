@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import axios from "axios";
 
 export default function Profile() {
   useEffect(() => {
@@ -13,6 +14,7 @@ export default function Profile() {
 
   const getUserInfo = () => {
     const LSValue = localStorage.getItem("user");
+    if (!LSValue) return null;
     const userObject = JSON.parse(LSValue);
 
     return userObject?.username;
@@ -20,7 +22,11 @@ export default function Profile() {
 
   // const [userInfo, setUserInfo] = useState();
   const navigate = useNavigate();
-  const logOutUser = () => {
+  const logOutUser = async () => {
+    const userType = JSON.parse(localStorage.getItem("user")).type;
+    if (userType == "github") {
+      await axios.get("http://localhost:5001/auth/github/logout");
+    }
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     navigate("/login");
