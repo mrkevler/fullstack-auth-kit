@@ -1,0 +1,32 @@
+{
+  "name": "fullstack-auth-kit",
+  "version": "1.0.0",
+  "description": "Full-stack authentication starter with React, Express and OAuth 2.0",
+  "scripts": {
+    "docker:setup": "./docker-env-setup.sh",
+    "docker:build": "npm run docker:setup && docker-compose build",
+    "docker:up": "npm run docker:setup && docker-compose up",
+    "docker:up:d": "npm run docker:setup && docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "docker:clean": "docker-compose down -v --remove-orphans",
+    "install:all": "npm run install:frontend && npm run install:backend",
+    "install:frontend": "cd frontend && npm install",
+    "install:backend": "cd backend && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrkevler/fullstack-auth-kit.git"
+  },
+  "keywords": [
+    "authentication",
+    "react",
+    "express",
+    "oauth",
+    "jwt",
+    "passport",
+    "github"
+  ],
+  "author": "Bartosz Sergot",
+  "license": "MIT"
+}

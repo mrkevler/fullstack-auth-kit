@@ -12,6 +12,7 @@ frontend/dist/
 frontend/build/
 frontend/.env
 frontend/.env.local
+frontend/.env.docker
 frontend/npm-debug.log*
 frontend/yarn-debug.log*
 frontend/yarn-error.log*
@@ -19,6 +20,7 @@ frontend/yarn-error.log*
 # === BACKEND ===
 backend/node_modules/
 backend/.env
+backend/.env.docker
 backend/logs/
 backend/dist/
 backend/uploads/
@@ -35,4 +37,3 @@ Thumbs.db
 
 # === DOCKER ===
 .docker/
-EOF

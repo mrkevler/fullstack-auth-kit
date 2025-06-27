@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  # === BACKEND SERVICE ===
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: auth-kit-backend
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    environment:
+      - NODE_ENV=development
+      - PORT=5001
+      - MONGODB_URI=mongodb://mongodb:27017/auth-kit
+      - JWT_SECRET=${JWT_SECRET:-docker_jwt_secret_change_in_production}
+      - JWT_EXPIRE=7d
+      - COOKIE_EXPIRE=7
+      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID:-your_github_client_id}
+      - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET:-your_github_client_secret}
+      - GITHUB_CALLBACK_URL=http://localhost:5001/auth/github/callback
+      - CLIENT_URL=http://localhost:3000
+      - SESSION_SECRET=${SESSION_SECRET:-docker_session_secret}
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - mongodb
+    networks:
+      - auth-network
+    command: npm start
